@@ -1,6 +1,6 @@
 # 学习笔记
 
-![banner](./banner.png)
+![banner](./banner.jpg)
 [[toc]]
 
 ## Markdown

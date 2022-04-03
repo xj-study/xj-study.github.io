@@ -22,7 +22,7 @@ module.exports = {
   // 主题和它的配置
   theme: "@vuepress/theme-default",
   themeConfig: {
-    logo: "/images/logo.png",
+    logo: "/images/logo.jpg",
     locales: {
       "/": {
         selectLanguageName: "中文",
