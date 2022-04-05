@@ -1,7 +1,21 @@
-# 学习笔记
-
-![banner](./banner.jpg)
-[[toc]]
+---
+home: true
+title: Home
+heroImage: /images/logo.jpg
+actions:
+  - text: Get Started
+    link: /guide/getting-started.html
+    type: primary
+  - text: Introduction
+    link: /guide/
+    type: secondary
+features:
+  - title: Vuepress
+    details: 使用 vuepress，布署在Github Pages 上.
+  - title: Vue-Powered
+    details: Enjoy the dev experience of Vue, use Vue components in markdown, and develop custom themes with Vue.
+footer: MIT Licensed | Copyright © 2022-present Tunie
+---
 
 ## Markdown
 
