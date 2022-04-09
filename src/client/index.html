@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>客户端js</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <h1>客户端 js</h1>
+    <h2>1. 如何查询或选取元素</h2>
+    <div id="c1-id">id 元素</div>
+    <div name="c1-name">name 元素</div>
+    <div id="c1-tag"><span>tag 元素</span></div>
+    <div class="c1-class">class 元素</div>
+    <div class="c1-selector test">selector 元素</div>
+
+    <div class="btn-list btn-list-1">
+      <div name="use-id" class="btn">通过id</div>
+      <div name="use-name" class="btn">通过name</div>
+      <div name="use-tag" class="btn">通过tag</div>
+      <div name="use-class" class="btn">通过class</div>
+      <div name="use-selector" class="btn">通过selector</div>
+    </div>
+
+    <h2>2. 如何增加插入元素</h2>
+    <div class="btn-list btn-list-2"></div>
+    <div class="list">
+      <div id="c2-id" class="list">
+        <span>id 元素</span>
+      </div>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="display.js"></script>
+    <script src="cms.js"></script>
+    <script src="c1.js"></script>
+    <script src="c2.js"></script>
+  </body>
+</html>

@@ -1,3 +1,8 @@
+---
+title: CommonJs 规范
+description:  CommonJs 规范简单说明
+---
+
 # CommonJs 规范
 
 CommonJs 是一个模块化规范，主要了解 `module`, `exports`, `require` 几个要点就可以了
