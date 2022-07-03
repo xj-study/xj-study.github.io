@@ -27,6 +27,41 @@ let list = [
   },
   {
     type: 'button',
+    name: 'insert-adjacent-text',
+    content: '通过insertAdjacentText',
+    handle: function () {
+      const node = getFirstElement('#c2-id')
+      const ri = getRandom(postion.length)
+      const pos = postion[ri]
+      node.insertAdjacentText(pos, `通过insertAdjacentText插入${pos}位置`)
+    },
+  },
+  {
+    type: 'button',
+    name: 'insert-adjacent-html',
+    content: '通过insertAdjacentHTML',
+    handle: function () {
+      const node = getFirstElement('#c2-id')
+      const ri = getRandom(postion.length)
+      const pos = postion[ri]
+      const tag = postag[ri]
+      const className = posclassName[ri]
+      let html = `<${tag} `
+      if (className) html += `class="${className}">通过insertAdjacentHTML插入${pos}位置</${tag}>`
+      node.insertAdjacentHTML(pos, html)
+    },
+  },
+  {
+    type: 'button',
+    name: 'append',
+    content: '通过append',
+    handle: function () {
+      const node = getFirstElement('#c2-id')
+      node.append(createNode('通过insertBefore'))
+    },
+  },
+  {
+    type: 'button',
     name: 'reset',
     content: 'reset',
     handle: function () {
@@ -37,14 +72,3 @@ let list = [
   },
 ]
 cms.use({ selector: '.btn-list-2', list })
-
-function createNode(content, tag = 'span', className = '') {
-  const node = document.createElement(tag)
-  className && (node.className = className)
-  node.innerHTML = content
-  return node
-}
-
-function getRandom(max) {
-  return Math.ceil(Math.random() * max) % max
-}

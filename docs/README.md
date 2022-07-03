@@ -4,7 +4,7 @@ title: Home
 heroImage: /images/logo.jpg
 actions:
   - text: 简单回顾
-    link: /guide/getting-started.html
+    link: /guide/index.html
     type: primary
   - text: 介绍
     link: /guide/

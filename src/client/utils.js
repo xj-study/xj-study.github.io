@@ -29,3 +29,14 @@ function getFirstElement(selectorOrElement) {
   if (selectorOrElement && selectorOrElement.length) selectorOrElement = selectorOrElement[0]
   return selectorOrElement
 }
+
+function createNode(content, tag = 'span', className = '') {
+  const node = document.createElement(tag)
+  className && (node.className = className)
+  node.innerHTML = content
+  return node
+}
+
+function getRandom(max) {
+  return Math.ceil(Math.random() * max) % max
+}
