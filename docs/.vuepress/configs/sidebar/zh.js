@@ -16,13 +16,23 @@ module.exports = {
   '/vue3/': [
     {
       text: 'vue3学习',
-      children: ['/vue3/README.md'],
+      link: '/vue3/README.md',
+    },
+    {
+      text: '响应系统',
+      children: ['/vue3/effect/README.md'],
     },
   ],
   '/operations/': [
     {
       text: '运维笔记',
       children: ['/operations/README.md'],
+    },
+  ],
+  '/tlower/': [
+    {
+      text: '如何使用',
+      children: ['/tlower/README.md'],
     },
   ],
 }

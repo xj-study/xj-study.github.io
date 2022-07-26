@@ -11,4 +11,8 @@ module.exports = [
     text: '运维笔记',
     link: '/operations/',
   },
+  {
+    text: 'tlower',
+    link: '/tlower/',
+  },
 ]
