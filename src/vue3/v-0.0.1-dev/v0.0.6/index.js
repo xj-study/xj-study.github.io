@@ -1,4 +1,7 @@
-console.log('vue3 learn start v0.0.7')
+console.log('vue3 learn start v0.0.6')
+/**
+ * 我们重新设计一下副作用函数容器的数据结构，
+ */
 
 // 收集所有有 effect
 const effectMap = new Map()
@@ -27,17 +30,14 @@ setTimeout(() => {
 function effect(fn) {
   activeEffect = fn
   fn()
-  // 解决二次执行重新保存依赖时，activeEffect 不对的问题
-  activeEffect = null
 }
 
 function reactive(obj) {
   return new Proxy(obj, {
     get(target, key) {
-      // new
+      
       if (!activeEffect) return target[key]
 
-      // effectMap[key] = activeEffect
       let depsMap = effectMap.get(target)
       if (!depsMap) {
         depsMap = {}
@@ -60,15 +60,8 @@ function reactive(obj) {
       const depsMap = effectMap.get(target)
       if (!depsMap) return
 
-      // 解决新增加的值持续遍历的问题
       const deps = depsMap[key]
-      if (deps) {
-        const keys = deps.keys()
-
-        for (let key of keys) {
-          key()
-        }
-      }
+      deps && deps.forEach((fn) => fn())
     },
   })
 }

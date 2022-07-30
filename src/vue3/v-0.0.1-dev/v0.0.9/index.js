@@ -1,4 +1,4 @@
-console.log('vue3 learn start v0.0.8')
+console.log('vue3 learn start v0.0.9')
 
 // 收集所有有 effect
 const effectMap = new Map()
@@ -8,7 +8,7 @@ let activeEffect = null
 const obj = reactive({ count: 0 })
 
 effect(function () {
-  console.log('effect 1')
+  console.log('effect 1', obj.count)
   document.body.innerText = '计数：' + obj.count++
 })
 
@@ -17,10 +17,11 @@ setTimeout(() => {
 }, 1000)
 
 function effect(fn) {
-  activeEffect = fn
-  fn()
-  // 解决二次执行重新保存依赖时，activeEffect 不对的问题
-  activeEffect = null
+  const effectFn = () => {
+    activeEffect = effectFn
+    fn()
+  }
+  effectFn()
 }
 
 function reactive(obj) {
@@ -52,14 +53,11 @@ function reactive(obj) {
       const depsMap = effectMap.get(target)
       if (!depsMap) return
 
-      // 解决新增加的值持续遍历的问题
+      console.log('test')
       const deps = depsMap[key]
       if (deps) {
-        const keys = deps.keys()
-
-        for (let key of keys) {
-          key()
-        }
+        const newDeps = new Set(deps)
+        newDeps.forEach((fn) => fn())
       }
     },
   })
