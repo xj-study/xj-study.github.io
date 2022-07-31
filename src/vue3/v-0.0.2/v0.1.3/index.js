@@ -16,7 +16,7 @@ const obj = new Proxy(
     set(target, key, val) {
       target[key] = val
 
-      // new  3. 注释掉 effect()，增加判断 activeEffect存在时，便执行的代码
+      // new  3. 注释掉effect()，增加判断activeEffect存在时，便执行activeEffect函数
       // effect()
       if (activeEffect) activeEffect()
     },
@@ -32,7 +32,7 @@ setTimeout(() => {
   obj.text = 'hello vue3'
 }, 1000)
 
-// new 2.重构 effect 函数，接收一个方法参数fn，执行时， 将 fn 赋值给 activeEffect
+// new 2.重构effect函数，接收一个方法参数fn，执行时， 将fn赋值给activeEffect
 function effect(fn) {
   activeEffect = fn
   fn()
