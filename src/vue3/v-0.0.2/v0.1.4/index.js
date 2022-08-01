@@ -3,10 +3,11 @@
  * 
  * 执行之后，我们发现，视图没有更新为 hello vue3！
  * 而是再次打印 ”测试多次执行effect函数！“
- * 说明当 obj.text 修改时， 再次执行了consoleFn方法。
+ * 说明当修改对象obj的text属性时， 执行了consoleFn方法。
  * 
- * 原因可以很容易分析出来，那是由于第二次执行effect函数时，activeEffect被赋值为consoleFn了。
- * 怎么解决这个问题呢？
+ * 通过分析可以知道，那是由于第二次执行effect函数时，activeEffect被赋值为consoleFn了。
+ * 
+ * 那改如何解决呢？
  */
 
 let activeEffect = null

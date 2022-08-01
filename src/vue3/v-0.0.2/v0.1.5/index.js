@@ -7,7 +7,7 @@
  * 这个方案完美了吗？
  */
 
-// new  1.增加一个全局的容器，注释掉与activeEffect相关的代码
+// new  1.增加一个全局的副作用函数容器，注释掉与activeEffect相关的代码
 const store = new Set()
 
 // let activeEffect = null
@@ -46,9 +46,8 @@ function effect(fn) {
 
 /**
  * 这个方案过于粗暴！
- * 我只想obj.text修改时，执行与obj.text关联的副作用函数，如effectFn。
- * 现在一旦触发拦截器 setter，就会执行容器里所有的副作用函数。
+ * 我只想修改text时，执行与text有关的副作用函数，如effectFn。
+ * 现在一旦触发拦截器setter，就会执行容器里所有的副作用函数。
  *
  * 相信vue3肯定也不是这么干的，不然我们项目肯定跑不起来。那该怎么办呢？
- *
  */

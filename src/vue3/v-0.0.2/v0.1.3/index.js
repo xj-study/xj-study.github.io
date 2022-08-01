@@ -16,7 +16,7 @@ const obj = new Proxy(
     set(target, key, val) {
       target[key] = val
 
-      // new  3. 注释掉effect()，增加判断activeEffect存在时，便执行activeEffect函数
+      // new  3. 注释掉effect()，增加当activeEffect存在时，便执行activeEffect函数代码行
       // effect()
       if (activeEffect) activeEffect()
     },
