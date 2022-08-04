@@ -34,6 +34,9 @@
  * effect fn2 run
  * `
  * 这是为什么？
+ * 为什么 effectFn 和 effectFn2 都执行了？
+ * 根据现在的数据结构，修改代理对象 obj 的 text 值时，应该只会执行 effectFn，
+ * 现在 effectFn2 也执行了！
  */
 
 // 全局的容器，用于存储副作用函数
