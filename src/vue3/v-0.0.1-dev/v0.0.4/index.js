@@ -2,7 +2,7 @@ console.log('vue3 learn start v0.0.4')
 /**
  * 通过重构 effect方法，让其接收一个函数做为参数fn，再增加一个全局变量activeEffect，
  * 当 effect 执行时，先将fn赋值给activeEffect，然后再执行fn。
- * 再修改一下对象get代理方法，当响应对象的属性被访问时，只需要简单收集activeEffect。
+ * 再修改一下对象get代理方法，当代理对象的属性被访问时，只需要简单收集activeEffect。
  * 这样就完成了副作用函数的动态化。
  */
 
