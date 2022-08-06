@@ -1,11 +1,9 @@
 /**
- * 栈溢出是由于当副作用函数执行时，会修改代理对象的属性从而再次执行当前副作用函数。
- *
- * 那我们是不是可以当副作用函数执行时，判断其是否与当前正在执行的副作用相同，若相同
- * 就不执行呢？
- * 如代码注释步骤1，执行之后发现确实没有栈溢出了。
- * 这时，我们增加定时器，1s 后，修改代理对象 obj 的属性 text，执行之后发现，副作用
- * 函数没有执行！
+ * 经过分析之后发现，
+ * 当代理对象的 text 属性修改触发副作用函数执行时，由于 activeEffect 指向就是当前副作用函数
+ * 所以不会继续执行，之后无论怎么修改都无法触发副作用函数的执行。
+ * 源头在 activeEffect 指向问题，那我们可以当 fn 执行完后，将 activeEffect 设置为 null，
+ * 这样不影响副作用函数的注册，也能解决无法触发的问题。
  */
 
 // 全局的容器，用于存储副作用函数
@@ -26,10 +24,17 @@ setTimeout(() => {
   obj.text = 'hello vue3'
 }, 1000)
 
+setTimeout(() => {
+  console.log('set to hello self')
+  obj.text = 'hello self'
+}, 2000)
+
 function effect(fn) {
   const effectFn = () => {
     activeEffect = effectFn
     fn()
+    // new
+    activeEffect = null
   }
   effectFn()
 }
@@ -62,7 +67,6 @@ function reactive(target) {
       if (!effects) return
 
       effects.forEach((fn) => {
-        // new 1.与当前激活副作用函数不一样时才执行
         if (fn != activeEffect) fn()
       })
     },

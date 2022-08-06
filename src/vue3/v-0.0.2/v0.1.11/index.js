@@ -1,6 +1,10 @@
 /**
  * 通过增加一个 count 字段，并在副作用函数里执行 count++。
  * 执行一下代码之后，发现报栈溢出错误。
+ * 
+ * 那是因为当执行 effect 注册副作用函数时，`obj.count++` 相当于 `obj.count = obj.count + 1`
+ * 这样不仅去获取了 count 值，还修改了 count 的值，导致程序进入了死循环，从而栈溢出。
+ * 
  */
 
 // 全局的容器，用于存储副作用函数
@@ -11,7 +15,9 @@ let activeEffect = null
 
 // new 1.新增一个 count 属性
 const obj = reactive({ text: 'hello world!', count: 1 })
-const obj2 = reactive({ text: 'hello world 2!' })
+
+// 注释掉无关代码
+// const obj2 = reactive({ text: 'hello world 2!' })
 
 effect(function effectFn() {
   console.log('effect fn run')
@@ -19,15 +25,17 @@ effect(function effectFn() {
   document.body.innerText = obj.text + obj.count++
 })
 
-effect(function effectFn2() {
-  console.log('effect fn2 run')
-  document.body.innerText = obj2.text
-})
+// 注释掉无关代码
+// effect(function effectFn2() {
+//   console.log('effect fn2 run')
+//   document.body.innerText = obj2.text
+// })
 
-setTimeout(() => {
-  console.log('set to hello vue3')
-  obj.text = 'hello vue3'
-}, 1000)
+// 注释掉无关代码
+// setTimeout(() => {
+//   console.log('set to hello vue3')
+//   obj.text = 'hello vue3'
+// }, 1000)
 
 function effect(fn) {
   const effectFn = () => {
