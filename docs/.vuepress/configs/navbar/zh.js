@@ -7,12 +7,12 @@ module.exports = [
     text: 'vue3学习',
     link: '/vue3/',
   },
-  {
-    text: '运维笔记',
-    link: '/operations/',
-  },
-  {
-    text: 'tlower',
-    link: '/tlower/',
-  },
+  // {
+  //   text: '运维笔记',
+  //   link: '/operations/',
+  // },
+  // {
+  //   text: 'tlower',
+  //   link: '/tlower/',
+  // },
 ]

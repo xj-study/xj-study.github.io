@@ -1,5 +1,9 @@
+const path = require('path')
 const navbar = require('./configs/navbar')
 const sidebar = require('./configs/sidebar')
+
+let srcPath = path.resolve(__dirname, '../../src')
+console.log('src path', srcPath)
 
 module.exports = {
   // 站点配置
@@ -37,6 +41,19 @@ module.exports = {
         selectLanguageName: 'english',
         selectLanguageText: 'language',
       },
+    },
+  },
+
+  // configureWebpack: {
+  //   resolve: {
+  //     alias: {
+  //       '@src': srcPath,
+  //     },
+  //   },
+  // },
+  markdown: {
+    importCode: {
+      handleImportPath: (str) => str.replace(/^@src/, srcPath),
     },
   },
 }

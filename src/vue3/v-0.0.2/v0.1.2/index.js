@@ -28,7 +28,7 @@ function effect() {
 }
 
 /**
- * 当然，这个原型有个显而易见的问题，effect 是硬编码的，用户副作用函数可以取名为myEffect，otherEffect 等等。
+ * 当然，这个原型有个显而易见的问题，effect 是硬编码的，用户编写的操作函数，之后以副作用函数来表达，可以取名为myEffect，otherEffect 等等。
  *
  * 那有没有办法解决这个问题呢？
  */
