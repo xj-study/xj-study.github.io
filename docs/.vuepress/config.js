@@ -1,3 +1,7 @@
+// const { registerComponentsPlugin } = require('@vuepress/plugin-register-components')
+
+const { defaultTheme } = require('vuepress')
+
 const path = require('path')
 const navbar = require('./configs/navbar')
 const sidebar = require('./configs/sidebar')
@@ -27,10 +31,9 @@ module.exports = {
   },
 
   // 主题和它的配置
-  theme: '@vuepress/theme-default',
-  themeConfig: {
-    logo: '/images/logo.jpg',
+  theme: defaultTheme({
     locales: {
+      logo: '/images/logo.jpg',
       '/': {
         selectLanguageName: '中文',
         selectLanguageText: '语言',
@@ -42,18 +45,34 @@ module.exports = {
         selectLanguageText: 'language',
       },
     },
-  },
-
-  // configureWebpack: {
-  //   resolve: {
-  //     alias: {
-  //       '@src': srcPath,
+  }),
+  // theme: '@vuepress/theme-default',
+  // themeConfig: {
+  //   logo: '/images/logo.jpg',
+  //   locales: {
+  //     '/': {
+  //       selectLanguageName: '中文',
+  //       selectLanguageText: '语言',
+  //       navbar: navbar.zh,
+  //       sidebar: sidebar.zh,
+  //     },
+  //     '/en/': {
+  //       selectLanguageName: 'english',
+  //       selectLanguageText: 'language',
   //     },
   //   },
   // },
+
   markdown: {
     importCode: {
       handleImportPath: (str) => str.replace(/^@src/, srcPath),
     },
   },
+
+  // plugins: [
+  //   registerComponentsPlugin({
+  //     // 配置项
+  //     componentsDir: path.resolve(__dirname, './components'),
+  //   }),
+  // ],
 }
