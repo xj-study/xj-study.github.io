@@ -8,7 +8,7 @@
 import { computed, ref, onUnmounted } from 'vue'
 
 const props = defineProps({
-  title: { type: String, default: '这时页面如下图显示：' },
+  title: { type: String, default: '运行一下，页面如下图显示：' },
   content: { type: [String, Array], default: '' },
   duration: { type: [Number, Array], default: 1000 },
 })
