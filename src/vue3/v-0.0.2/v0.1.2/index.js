@@ -1,4 +1,4 @@
-// new
+// 新增
 const obj = new Proxy(
   { text: 'hello world!' },
   {
