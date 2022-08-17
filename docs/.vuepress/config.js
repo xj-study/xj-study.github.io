@@ -1,4 +1,4 @@
-// const { registerComponentsPlugin } = require('@vuepress/plugin-register-components')
+const { registerComponentsPlugin } = require('@vuepress/plugin-register-components')
 
 const { defaultTheme } = require('vuepress')
 
@@ -46,22 +46,6 @@ module.exports = {
       },
     },
   }),
-  // theme: '@vuepress/theme-default',
-  // themeConfig: {
-  //   logo: '/images/logo.jpg',
-  //   locales: {
-  //     '/': {
-  //       selectLanguageName: '中文',
-  //       selectLanguageText: '语言',
-  //       navbar: navbar.zh,
-  //       sidebar: sidebar.zh,
-  //     },
-  //     '/en/': {
-  //       selectLanguageName: 'english',
-  //       selectLanguageText: 'language',
-  //     },
-  //   },
-  // },
 
   markdown: {
     importCode: {
@@ -69,10 +53,10 @@ module.exports = {
     },
   },
 
-  // plugins: [
-  //   registerComponentsPlugin({
-  //     // 配置项
-  //     componentsDir: path.resolve(__dirname, './components'),
-  //   }),
-  // ],
+  plugins: [
+    registerComponentsPlugin({
+      // 配置项
+      componentsDir: path.resolve(__dirname, './components'),
+    }),
+  ],
 }
