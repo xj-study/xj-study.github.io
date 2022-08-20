@@ -9,7 +9,7 @@
 <script setup>
 import { computed } from 'vue'
 const props = defineProps({
-  title: { type: String, default: 'Console 日志打印如下图显示：' },
+  title: { type: String, default: 'Console 日志打印如下显示：' },
   content: { type: [String, Array], default: '' },
 })
 
