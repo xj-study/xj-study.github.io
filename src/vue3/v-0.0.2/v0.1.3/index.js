@@ -14,7 +14,7 @@ const obj = new Proxy(
   }
 )
 
-// 重构 3.执行 effect 方法，并将副作用函数 effectFn 作为参数传入
+// 修改 3.执行 effect 方法，并将副作用函数 effectFn 作为参数传入
 effect(function effectFn() {
   document.body.innerText = obj.text
 })
