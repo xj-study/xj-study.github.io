@@ -1,14 +1,3 @@
-/**
- * 经过分析发现，当修改代理对象 obj 的 text 属性时，会执行对应的副作用函数 effectFn，
- * 同时，这时也会触发副作用函数注册逻辑，不过，这时 activeEffect 指向不是 effectFn，
- * 而是 effectFn2！这时就会执行 Set 的 add 方法，将 effectFn2 收集起来。
- * 此时 Set 集合的 forEach 遍历方法还没有结束，正好就遍历到了刚刚添加进去的 effectFn2
- * 函数。
- * 问题找到了就好办了，只需要解决 activeEffect 指向的问题就可以了。
- * 只需要当副作用函数执行时，activeEffect 正好指向这个正在执行的函数，就能解决这个问题了。
- * 代码实现如下：
- */
-
 // 全局的容器，用于存储副作用函数
 const store = new Map()
 console.log('store', store)
@@ -46,39 +35,41 @@ function effect(fn) {
   effectFn()
 }
 
-function reactive(target) {
-  return new Proxy(target, {
+function reactive(data) {
+  return new Proxy(data, {
     get(target, key) {
-      if (activeEffect) {
-        let deps = store.get(target)
-        if (!deps) {
-          store.set(target, (deps = new Map()))
-        }
-
-        let effects = deps.get(key)
-        if (!effects) {
-          deps.set(key, (effects = new Set()))
-        }
-
-        effects.add(activeEffect)
-      }
+      track(target, key)
       return target[key]
     },
     set(target, key, val) {
       target[key] = val
-
-      const deps = store.get(target)
-      if (!deps) return
-
-      const effects = deps.get(key)
-      if (!effects) return
-
-      effects.forEach((fn) => fn())
+      trigger(target, key, val)
     },
   })
 }
 
+function track(target, key) {
+  if (activeEffect) {
+    let deps = store.get(target)
+    if (!deps) {
+      store.set(target, (deps = new Map()))
+    }
 
-/**
- * 看上去好像能用了，哈哈，不过别高兴的太早
- */
+    let effects = deps.get(key)
+    if (!effects) {
+      deps.set(key, (effects = new Set()))
+    }
+
+    effects.add(activeEffect)
+  }
+}
+
+function trigger(target, key, val) {
+  const deps = store.get(target)
+  if (!deps) return
+
+  const effects = deps.get(key)
+  if (!effects) return
+
+  effects.forEach((fn) => fn())
+}

@@ -1,12 +1,3 @@
-/**
- * 通过增加一个 count 字段，并在副作用函数里执行 count++。
- * 执行一下代码之后，发现报栈溢出错误。
- * 
- * 那是因为当执行 effect 注册副作用函数时，`obj.count++` 相当于 `obj.count = obj.count + 1`
- * 这样不仅去获取了 count 值，还修改了 count 的值，导致程序进入了死循环，从而栈溢出。
- * 
- */
-
 // 全局的容器，用于存储副作用函数
 const store = new Map()
 console.log('store', store)
@@ -45,34 +36,41 @@ function effect(fn) {
   effectFn()
 }
 
-function reactive(target) {
-  return new Proxy(target, {
+function reactive(data) {
+  return new Proxy(data, {
     get(target, key) {
-      if (activeEffect) {
-        let deps = store.get(target)
-        if (!deps) {
-          store.set(target, (deps = new Map()))
-        }
-
-        let effects = deps.get(key)
-        if (!effects) {
-          deps.set(key, (effects = new Set()))
-        }
-
-        effects.add(activeEffect)
-      }
+      track(target, key)
       return target[key]
     },
     set(target, key, val) {
       target[key] = val
-
-      const deps = store.get(target)
-      if (!deps) return
-
-      const effects = deps.get(key)
-      if (!effects) return
-
-      effects.forEach((fn) => fn())
+      trigger(target, key, val)
     },
   })
+}
+
+function track(target, key) {
+  if (activeEffect) {
+    let deps = store.get(target)
+    if (!deps) {
+      store.set(target, (deps = new Map()))
+    }
+
+    let effects = deps.get(key)
+    if (!effects) {
+      deps.set(key, (effects = new Set()))
+    }
+
+    effects.add(activeEffect)
+  }
+}
+
+function trigger(target, key, val) {
+  const deps = store.get(target)
+  if (!deps) return
+
+  const effects = deps.get(key)
+  if (!effects) return
+
+  effects.forEach((fn) => fn())
 }

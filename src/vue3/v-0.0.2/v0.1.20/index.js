@@ -1,7 +1,8 @@
 /**
- * 解决调度问题
- * 
- * 基于 effect 如何实现 vue computed api？
+ * 我们知道 computed 有以下特性
+ * 1. 懒执行
+ * 2. 缓存结果
+ * 完美实现
  */
 
 const store = new Map()
@@ -12,37 +13,48 @@ let activeEffect = null
 
 const obj = reactive({ text: 'hello world!' })
 
-let id = null
-effect(
-  function effectFn() {
-    console.log('effect fn run')
-    document.body.innerText = obj.text
-  },
-  {
-    schedule: (fn) => {
-      if (id) return
-      id = setTimeout(() => {
-        fn()
-      }, 0)
+const obj2 = computed(() => {
+  return 'computed ' + obj.text
+})
+
+obj2.value
+obj2.value
+obj2.value
+obj.text = 'hello vue3'
+obj2.value
+obj2.value
+
+function computed(fn) {
+  let value = null
+  let dirty = true
+  const effectFn = effect(fn, {
+    isLazy: true,
+    schedule() {
+      dirty = true
+    },
+  })
+
+  const obj = {
+    get value() {
+      if (dirty) {
+        value = effectFn()
+        dirty = false
+      }
+      return value
     },
   }
-)
-
-setTimeout(function t1() {
-  console.log('set text to hello vue3')
-  obj.text = 'hello vue3' // new
-  console.log('set text to hello self')
-  obj.text = 'hello self' // new
-}, 1000)
+  return obj
+}
 
 /**
  *
  * @param {*} fn 副作用函数
  * @param {*} options 参数
- * { schedule }
+ * { schedule, isLazy }
  * schedule: 调度函数
+ * isLazy: 是否懒执行
  */
-function effect(fn, options /* new */) {
+function effect(fn, options = {}) {
   const effectFn = () => {
     // 清理关联
     cleanup(effectFn)
@@ -56,16 +68,20 @@ function effect(fn, options /* new */) {
 
     effectStack.push(activeEffect)
     activeEffect = effectFn
-    fn()
+    const res = fn()
     activeEffect = effectStack.pop()
+    return res
   }
   // 收集 副作用函数的容器对象
   effectFn.deps = []
   // 收集 子副作用函数
   effectFn.subEffectFns = []
-  // 增加选项
-  effectFn.options = options || {} // new
-  effectFn()
+  effectFn.options = options || {}
+
+  if (!options.isLazy) {
+    effectFn()
+  }
+  return effectFn
 }
 
 // 清理副作用函数相关的关联
