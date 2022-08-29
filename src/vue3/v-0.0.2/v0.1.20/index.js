@@ -1,10 +1,3 @@
-/**
- * 我们知道 computed 有以下特性
- * 1. 懒执行
- * 2. 缓存结果
- * 完美实现
- */
-
 const store = new Map()
 console.log('store', store)
 
@@ -102,47 +95,56 @@ function cleanupSubEffects(effectFn) {
   effectFn.subEffectFns.length = 0
 }
 
-function reactive(target) {
-  return new Proxy(target, {
+function reactive(data) {
+  return new Proxy(data, {
     get(target, key) {
-      if (activeEffect) {
-        let deps = store.get(target)
-        if (!deps) {
-          store.set(target, (deps = new Map()))
-        }
-
-        let effects = deps.get(key)
-        if (!effects) {
-          deps.set(key, (effects = new Set()))
-        }
-
-        effects.add(activeEffect)
-
-        // 收集当前副作用函数关联的 effects 容器
-        activeEffect.deps.push(effects)
-      }
+      track(target, key)
       return target[key]
     },
     set(target, key, val) {
       target[key] = val
-
-      const deps = store.get(target)
-      if (!deps) return
-
-      const effects = deps.get(key)
-      if (!effects) return
-
-      const toRunEffects = new Set()
-      effects.forEach((fn) => {
-        if (fn != activeEffect) toRunEffects.add(fn)
-      })
-      toRunEffects.forEach((fn) => {
-        if (fn.options.schedule) {
-          fn.options.schedule(fn)
-        } else {
-          fn()
-        }
-      })
+      trigger(target, key, val)
     },
+  })
+}
+
+function track(target, key) {
+  if (activeEffect) {
+    let deps = store.get(target)
+    if (!deps) {
+      store.set(target, (deps = new Map()))
+    }
+
+    let effects = deps.get(key)
+    if (!effects) {
+      deps.set(key, (effects = new Set()))
+    }
+
+    effects.add(activeEffect)
+
+    // 收集当前副作用函数关联的 effects 容器
+    activeEffect.deps.push(effects)
+  }
+  return target[key]
+}
+function trigger(target, key, val) {
+  target[key] = val
+
+  const deps = store.get(target)
+  if (!deps) return
+
+  const effects = deps.get(key)
+  if (!effects) return
+
+  const toRunEffects = new Set()
+  effects.forEach((fn) => {
+    if (fn != activeEffect) toRunEffects.add(fn)
+  })
+  toRunEffects.forEach((fn) => {
+    if (fn.options.schedule) {
+      fn.options.schedule(fn)
+    } else {
+      fn()
+    }
   })
 }

@@ -1,9 +1,3 @@
-/**
- * 当同步多次修改响应对象的同一个属性值时，我们发现对应的副作用函数执行了多次
- * 作为一个框架，我们需要追求性能的极致，这种多次执行是完全没有必要的。
- * 那改如何解决呢？
- */
-
 const store = new Map()
 console.log('store', store)
 
@@ -66,41 +60,47 @@ function cleanupSubEffects(effectFn) {
   effectFn.subEffectFns.length = 0
 }
 
-function reactive(target) {
-  return new Proxy(target, {
+function reactive(data) {
+  return new Proxy(data, {
     get(target, key) {
-      if (activeEffect) {
-        let deps = store.get(target)
-        if (!deps) {
-          store.set(target, (deps = new Map()))
-        }
-
-        let effects = deps.get(key)
-        if (!effects) {
-          deps.set(key, (effects = new Set()))
-        }
-
-        effects.add(activeEffect)
-
-        // 收集当前副作用函数关联的 effects 容器
-        activeEffect.deps.push(effects)
-      }
+      track(target, key)
       return target[key]
     },
     set(target, key, val) {
       target[key] = val
-
-      const deps = store.get(target)
-      if (!deps) return
-
-      const effects = deps.get(key)
-      if (!effects) return
-
-      const toRunEffects = new Set()
-      effects.forEach((fn) => {
-        if (fn != activeEffect) toRunEffects.add(fn)
-      })
-      toRunEffects.forEach((fn) => fn())
+      trigger(target, key, val)
     },
   })
+}
+
+function track(target, key) {
+  if (activeEffect) {
+    let deps = store.get(target)
+    if (!deps) {
+      store.set(target, (deps = new Map()))
+    }
+
+    let effects = deps.get(key)
+    if (!effects) {
+      deps.set(key, (effects = new Set()))
+    }
+
+    effects.add(activeEffect)
+
+    // 收集当前副作用函数关联的 effects 容器
+    activeEffect.deps.push(effects)
+  }
+}
+function trigger(target, key, val) {
+  const deps = store.get(target)
+  if (!deps) return
+
+  const effects = deps.get(key)
+  if (!effects) return
+
+  const toRunEffects = new Set()
+  effects.forEach((fn) => {
+    if (fn != activeEffect) toRunEffects.add(fn)
+  })
+  toRunEffects.forEach((fn) => fn())
 }
