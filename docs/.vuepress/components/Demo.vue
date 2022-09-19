@@ -1,6 +1,6 @@
 <template>
   <div class="demo-x">
-    <p>
+    <p class="demo-h">
       <span>{{ title }}</span>
       <div v-if="isStep" :class="['btn', {active: isRunning}]" @click="start">{{ btnName }}</div>
     </p>
@@ -45,10 +45,10 @@ function start(){
 let stepId = null
 function step() {
   stepId = setTimeout(() => {
-    console.log('step', currentIndex)
     if (currentIndex.value + 1 >= props.content.length) {
       stepId = null
       isRunning.value = false
+      currentIndex.value = 0
     } else {
       currentIndex.value = currentIndex.value + 1
       step()
@@ -67,12 +67,20 @@ onUnmounted(() => {
   padding: 0.25rem 0 0.25rem 1rem;
   border-left: 0.2rem solid var(--c-brand);
 }
+.demo-x {
+  border: 1px solid var(--c-border);
+  padding: 0.2rem 1rem;
+}
+.demo-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .btn {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  font-size: 0.8rem;
-  padding-left: 12px;
+  padding-left: 1.2rem;
 }
 
 .btn:before{
@@ -81,14 +89,14 @@ onUnmounted(() => {
   top: 50%;
   transform: translateY(-50%);
   content: '';
-  border: 0.4rem transparent solid;
+  border: 0.6rem transparent solid;
   border-left-color: var(--c-brand);
 }
 .active.btn:before{
   position: absolute;
   border: none;
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.8rem;
+  height: 0.8rem;
   background: var(--c-danger);
 }
 </style>

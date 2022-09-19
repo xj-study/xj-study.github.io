@@ -3,63 +3,15 @@ home: true
 title: Home
 heroImage: /images/logo.jpg
 actions:
-  - text: 简单回顾
+  - text: 开始
     link: /guide/index.html
     type: primary
-  - text: 介绍
-    link: /guide/
-    type: secondary
 features:
   - title: Vuepress
-    details: 使用vuepress记录学习过程，并将其布署在Github Pages 上.
-  - title: Vue-Powered
-    details: Enjoy the dev experience of Vue, use Vue components in markdown, and develop custom themes with Vue.
+    details: 使用vuepress记录学习思考过程，并将其布署在Github Pages 上。
+  - title: 前端相关
+    details: 记录前端的相关技术，如 css，javascript，vue，数据结构等。
+  - title: 循序渐进
+    details: 拆解每一个要点的学习思考过程，小迈步前进。
 footer: MIT Licensed | Copyright © 2022-present xiejun
 ---
-
-## Markdown
-
-### 入门文档
-
-若对 Markdown 不太了解，可以先学习 [MarkDwon 教程](https://commonmark.org/help)。
-
-### Markdown 扩展
-
-vuepress 关于 Markdown 扩展的[详细文档](https://v2.vuepress.vuejs.org/zh/guide/markdown.html#%E8%AF%AD%E6%B3%95%E6%89%A9%E5%B1%95)。
-
-#### 代码块
-
-vuepress/config.js 配置
-
-```js{1,9-11}:no-line-numbers
-module.exports = {
-  // 站点配置
-  lang: "zh-CN",
-  title: "学习笔记",
-  description: "这是我的第一个 VuePress 站点",
-
-  // 主题和它的配置
-  theme: "@vuepress/theme-default",
-  themeConfig: {
-    logo: "https://vuejs.org/images/logo.png",
-  },
-};
-```
-
-#### 导入代码块
-
-vuepress/config.js 配置指定行数
-@[code{3-5}](./.vuepress/config.js)
-
-### 使用 vue <Badge type="tip" text="v2" vertical="top" />
-
-详细文档可参考[Vuepress 文档](https://v2.vuepress.vuejs.org/zh/guide/markdown.html#%E5%9C%A8-markdown-%E4%B8%AD%E4%BD%BF%E7%94%A8-vue)。
-
-```md
-简单计算一下 1 + 2 = {{ 1 + 2}}
-<span v-for="i in 3">span: {{ i }}</span>
-```
-
-简单计算一下 1 + 2 = {{ 1 + 2}}
-
-<span v-for="i in 3">span: {{ i }}</span>

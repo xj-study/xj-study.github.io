@@ -15,17 +15,11 @@ module.exports = {
     //   link: '/operations/README.md',
     // },
   ],
-  '/vue3/': [
+  '/vue3/effect/': [
     {
-      text: 'vue3学习',
-      children: [
-        {
-          text: '数据响应',
-          link: '/vue3/effect/README.md',
-          children: effects,
-        },
-      ],
-      //
+      text: '响应系统',
+      link: '/vue3/effect/README.md',
+      children: effects,
     },
   ],
   // '/operations/': [
