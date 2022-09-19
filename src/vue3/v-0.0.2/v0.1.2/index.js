@@ -1,19 +1,10 @@
-// 新增修改
-const obj = new Proxy(
-  { text: 'hello world!' },
-  {
-    set(target, key, val) {
-      target[key] = val
-      effect()
-    },
-  }
-)
+const obj = { count: 2 }
 
-effect()
-setTimeout(() => {
-  obj.text = 'hello vue3'
-}, 1000)
+Object.defineProperty(obj, 'count', {
+  get: function () {
+    return 3
+  },
+})
 
-function effect() {
-  document.body.innerText = obj.text
-}
+console.log(obj.count)  // 3
+ 
