@@ -11,16 +11,19 @@ const obj = new Proxy(
   }
 )
 
-effect()
+// 修改
+effect(function foo() {
+  document.body.innerText = obj.text
+})
 setTimeout(() => {
   obj.text = 'hello vue3' 
 }, 1000)
 
-function effect() {
-  // document.body.innerText = obj.text
-  foo()
+function effect(fn) {
+  fn()
 }
 
-function foo() {
-  document.body.innerText = obj.text
-}
+// 注释掉
+// function foo() {
+//   document.body.innerText = obj.text
+// }

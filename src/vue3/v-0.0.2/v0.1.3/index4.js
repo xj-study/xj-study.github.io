@@ -1,3 +1,6 @@
+// 当前的副作用函数
+let activeEffect // 新增
+
 const obj = new Proxy(
   { text: 'hello world!' },
   {
@@ -6,21 +9,20 @@ const obj = new Proxy(
     },
     set(target, propKey, value) {
       target[propKey] = value
-      effect()
+      // effect()
+      if (activeEffect) activeEffect() // 新增
     },
   }
 )
 
-effect()
+effect(function foo() {
+  document.body.innerText = obj.text
+})
 setTimeout(() => {
   obj.text = 'hello vue3' 
 }, 1000)
 
-function effect() {
-  // document.body.innerText = obj.text
-  foo()
-}
-
-function foo() {
-  document.body.innerText = obj.text
+function effect(fn) {
+  activeEffect = fn // 新增
+  fn()
 }

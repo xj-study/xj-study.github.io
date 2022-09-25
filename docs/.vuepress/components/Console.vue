@@ -25,4 +25,9 @@ const list = computed(() => {
   padding: 0.25rem 0 0.25rem 1rem;
   border-left: 0.2rem solid var(--c-brand);
 }
+.console-x {
+  border: 1px solid var(--c-border);
+  padding: 0.2rem 1rem;
+  margin: 0.25rem 0;
+}
 </style>

@@ -11,14 +11,14 @@ const obj = new Proxy(
   }
 )
 
-effect()
+effect(foo) // 修改
 setTimeout(() => {
-  obj.text = 'hello vue3' 
+  obj.text = 'hello vue3'
 }, 1000)
 
-function effect() {
-  // document.body.innerText = obj.text
-  foo()
+// 修改
+function effect(fn) {
+  fn()
 }
 
 function foo() {

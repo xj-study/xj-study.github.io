@@ -3,19 +3,23 @@ let activeEffect = null
 const obj = new Proxy(
   { text: 'hello world!' },
   {
-    set(target, key, val) {
-      target[key] = val
-
+    get(target, propKey) {
+      return target[propKey]
+    },
+    set(target, propKey, value) {
+      target[propKey] = value
+      // effect()
       if (activeEffect) activeEffect()
     },
   }
 )
 
-effect(function effectFn() {
+effect(function foo() {
   document.body.innerText = obj.text
 })
 
-// 新增，再次执行 effect 方法
+// 新增
+// 再次执行 effect 方法
 effect(function consoleFn() {
   console.log('测试多次执行 effect 函数！')
 })
