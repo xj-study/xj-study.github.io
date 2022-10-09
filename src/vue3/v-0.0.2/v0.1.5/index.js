@@ -1,36 +1,33 @@
-// 1.增加一个全局的副作用函数容器，注释掉与 activeEffect 相关的代码
-const store = new Set() // 新增
+let m = new Map()
+let obj = { text: 'hello world!' }
+// 往 map 中添加数据
+m.set(obj, 'value')
+// 根据 key 取得值，此时的 key 为对象 obj
+m.get(obj) // value
 
-// let activeEffect = null
+// 返回集合的总数
+m.size // 1
+// 返回对应键是否存在
+m.has(obj) // true
+// 删除某个键
+m.delete(obj) // true
 
-const obj = new Proxy(
-  { text: 'hello world!' },
-  {
-    set(target, key, val) {
-      target[key] = val
+m.set(true, 'value is boolean')
+m.set(obj, 'value is object')
+m.set(1, 'value is number')
 
-      // if (activeEffect) activeEffect()
-      // 3.遍历 store ，执行容器中的副作用函数
-      store.forEach((fn) => fn()) // 新增
-    },
-  }
-)
-
-effect(function effectFn() {
-  document.body.innerText = obj.text
-})
-
-effect(function consoleFn() {
-  console.log('测试多次执行 effect 函数！')
-})
-
-setTimeout(() => {
-  obj.text = 'hello vue3'
-}, 1000)
-
-function effect(fn) {
-  // activeEffect = fn
-  // 2.将 fn 保存起来
-  store.add(fn) // 新增
-  fn()
+// 遍历 Map 的所有键
+for (let i of m.keys()) {
+  console.log('key', i)
 }
+// key true
+// key { text: 'hello world!' }
+// key 1
+
+// 遍历 Map 的所有值
+for (let i of m.values()) {
+  console.log(i)
+}
+// value is boolean
+// value is object
+// value is number

@@ -21,7 +21,7 @@ function defineReactive(obj, prop) {
 }
 
 effect()
-// ...省略相关代码
+// ...省略部分代码
 setTimeout(() => {
   // obj.text = 'hello vue3'
   obj.desc = '你好吗？' // 新增

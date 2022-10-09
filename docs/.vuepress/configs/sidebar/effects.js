@@ -1,6 +1,7 @@
 const map = {
   2: 4,
   3: 6,
+  6: 4,
 }
 let list = []
 let prefix = '/vue3/effect/v0.0.'
