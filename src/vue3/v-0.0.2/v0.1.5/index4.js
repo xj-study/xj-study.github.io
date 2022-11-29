@@ -2,10 +2,8 @@
 const container = new Map()
 
 let activeEffect = null
-// 省略部分代码
 const obj = new Proxy(
   { text: 'hello world!', name: '谢军' }, // 修改
-  // 省略部分代码
   {
     get(target, propKey) {
       // 映射关系注册
@@ -26,18 +24,15 @@ const obj = new Proxy(
 effect(function foo() {
   document.body.innerText = obj.text
 })
-// 省略部分代码
 // 测试 effect 使用同一个响应对象的不同属性
 effect(function consoleFn() {
   console.log('测试 effect 使用同一个响应对象的不同属性')
   document.body.innerText = '姓名：' + obj.name // 新增
 })
-// 省略部分代码
 
 setTimeout(() => {
   obj.text = 'hello vue3'
 }, 1000)
-// 省略部分代码
 function effect(fn) {
   activeEffect = fn
   fn()

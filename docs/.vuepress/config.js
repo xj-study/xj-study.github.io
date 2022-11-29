@@ -13,7 +13,7 @@ module.exports = {
   // 站点配置
   lang: 'zh-CN',
   title: '学习笔记',
-  description: '这是一个 VuePress 站点',
+  description: '每天多花那么一点点时间学习，也是好的',
 
   locales: {
     // 键名是该语言所属的子路径
@@ -25,8 +25,6 @@ module.exports = {
     // },
     '/': {
       lang: 'zh-CN',
-      title: '学习笔记',
-      description: '记录在学习过程中碰到的问题及思考',
     },
   },
 

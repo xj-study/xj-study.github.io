@@ -4,7 +4,7 @@ module.exports = {
   '/guide/': [
     {
       text: '简单回顾',
-      children: ['/guide/README.md', '/guide/commonjs.md', '/guide/vuepress.md', '/guide/mescroll/README.md'],
+      children: ['/guide/README.md', '/guide/commonjs.md', '/guide/vuepress.md', '/guide/rollup.md', '/guide/nodejs.md', '/guide/esbuild.md'],
     },
     {
       text: 'vue3学习',
@@ -15,11 +15,17 @@ module.exports = {
     //   link: '/operations/README.md',
     // },
   ],
-  '/vue3/effect/': [
+  '/vue3/': [
+    {
+      text: '介绍',
+      link: '/vue3/README.md',
+      collapsible: true,
+    },
     {
       text: '响应系统',
-      link: '/vue3/effect/README.md',
-      children: effects,
+      // link: '/vue3/effect/README.md',
+      collapsible: true,
+      children: [effects.index, effects.v1, effects.v2, effects.v3],
     },
   ],
   // '/operations/': [

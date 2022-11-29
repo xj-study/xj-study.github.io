@@ -7,6 +7,10 @@ module.exports = [
     text: 'vue3学习',
     children: [
       {
+        text:'介绍',
+        link: '/vue3/README.md',
+      },
+      {
         text: '响应系统',
         link: '/vue3/effect/README.md',
       },
